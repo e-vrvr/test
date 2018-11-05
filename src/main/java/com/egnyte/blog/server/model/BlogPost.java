@@ -1,17 +1,17 @@
 package com.egnyte.blog.server.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@ToString
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder(toBuilder = true)
-@EqualsAndHashCode
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor(force = true)
 public class BlogPost {
 
     private Integer id;

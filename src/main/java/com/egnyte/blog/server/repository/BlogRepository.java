@@ -19,6 +19,7 @@ import static java.util.stream.Stream.of;
 @Repository
 public class BlogRepository {
 
+    //transactions???? TODO
     private static final String INSERT_SQL = "INSERT INTO posts (content, subject, tags, modificationDate, authorName, authorUserName) VALUES (:content, :subject, :tags, :date, :authorName, :authorUserName)";
     private static final String SELECT_BY_POSTID = "SELECT POSTID, CONTENT, SUBJECT, TAGS, MODIFICATIONDATE, AUTHORNAME, AUTHORUSERNAME FROM posts";
     private static final String POST_ID = "postId";

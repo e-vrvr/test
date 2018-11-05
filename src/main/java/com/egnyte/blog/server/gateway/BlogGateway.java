@@ -2,8 +2,7 @@ package com.egnyte.blog.server.gateway;
 
 import com.egnyte.blog.server.model.BlogPost;
 import com.egnyte.blog.server.repository.BlogRepository;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,11 +14,10 @@ import static java.net.URI.create;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.springframework.http.ResponseEntity.*;
 
+@Slf4j
 @RestController
 @RequestMapping(path = "/posts", produces = MediaType.APPLICATION_JSON)
 public class BlogGateway {
-
-    private static final Logger LOGGER = LogManager.getLogger();
 
     private final BlogRepository blogRepository;
 
@@ -29,7 +27,7 @@ public class BlogGateway {
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<BlogPost> blogPostGet(@PathVariable("id") int postId) {
-        LOGGER.info("Received request for blog with id = [{}]", postId);
+        log.info("Received request for blog with id = [{}]", postId);
 
         return blogRepository.findById(postId)
                 .map(post -> ok(post))
@@ -39,7 +37,7 @@ public class BlogGateway {
 
     @PostMapping(consumes = APPLICATION_JSON)
     public ResponseEntity<BlogPost> blogPostCreate(@RequestBody BlogPost blogPost) {
-        LOGGER.info("Received request to create blog [{}]", blogPost);
+        log.info("Received request to create blog [{}]", blogPost);
 
         return blogRepository.save(blogPost)
                 .map(post -> created(getLocation(post))

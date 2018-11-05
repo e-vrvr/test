@@ -1,8 +1,7 @@
 package com.egnyte.blog.server.repository;
 
 import com.egnyte.blog.server.model.BlogPost;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -25,10 +24,9 @@ import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Stream.of;
 
+@Slf4j
 @Repository
 public class BlogRepository {
-
-    private static final Logger LOGGER = LogManager.getLogger();
 
     private static final String INSERT_SQL = "INSERT INTO posts (content, subject, tags, modificationDate, authorName, authorUserName) VALUES (:content, :subject, :tags, :date, :authorName, :authorUserName)";
     private static final String SELECT_BY_POSTID = "SELECT POSTID, CONTENT, SUBJECT, TAGS, MODIFICATIONDATE, AUTHORNAME, AUTHORUSERNAME FROM posts where POSTID = :postId";
@@ -46,20 +44,20 @@ public class BlogRepository {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue(POST_ID, id);
 
-        LOGGER.debug("Using [{}] parameters to fetch blog post", parameterSource);
+        log.debug("Using [{}] parameters to fetch blog post", parameterSource);
         try {
             BlogPost blogPost = jdbcTemplate
                     .queryForObject(SELECT_BY_POSTID, parameterSource, mapToBlogPost());
             return Optional.of(blogPost);
         } catch (Exception e) {
-            LOGGER.error(format("Error occurred while looking for post with id = [%s]", id), e);
+            log.error(format("Error occurred while looking for post with id = [%s]", id), e);
             return empty();
         }
     }
 
     public Optional<BlogPost> save(BlogPost post) {
         MapSqlParameterSource parameterSource = prepareParameters(post);
-        LOGGER.debug("Using [{}] parameters to fetch blog post", parameterSource);
+        log.debug("Using [{}] parameters to fetch blog post", parameterSource);
 
         KeyHolder primaryKeyHolder = new GeneratedKeyHolder();
 
@@ -72,7 +70,7 @@ public class BlogRepository {
                             .id(generatedId)
                             .build());
         } catch (Exception e) {
-            LOGGER.error(format("Error occurred while saving post [%s]", post), e);
+            log.error(format("Error occurred while saving post [%s]", post), e);
             return empty();
         }
     }

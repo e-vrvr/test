@@ -31,8 +31,7 @@ public class BlogGateway {
 
         return blogRepository.findById(postId)
                 .map(post -> ok(post))
-                .orElse(notFound()
-                        .build());
+                .orElseThrow(() -> new EmployeeNotFoundException(postId));
     }
 
     @PostMapping(consumes = APPLICATION_JSON)

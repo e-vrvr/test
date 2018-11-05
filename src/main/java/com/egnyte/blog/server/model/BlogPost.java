@@ -1,22 +1,20 @@
 package com.egnyte.blog.server.model;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
-import org.springframework.data.annotation.Id;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @ToString
-@Builder
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder(toBuilder = true)
 @EqualsAndHashCode
+@Setter
 public class BlogPost {
 
-    @Id
-    private Long id;
+    private Integer id;
     private String content;
     private String subject;
     private List<String> tags;

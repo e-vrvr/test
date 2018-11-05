@@ -1,0 +1,1 @@
+INSERT INTO posts (postId, content, subject, tags, modificationDate, authorName, authorUserName) VALUES (1, 'This is a real post from a real database', 'Super DB!', 'db,blog,lifestyle', '2018-01-01', 'John Millar', 'johnMillar');
